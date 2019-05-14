@@ -1,0 +1,25 @@
+   {
+      "ipath": "hysds::data/Volcano",
+      "match_pattern": "/(?P<dataset_type>VOLC)-(?P<station>GVN)_(?P<id>.+)-(?P<vname>)$",
+      "alt_match_pattern": null,
+      "extractor": null,
+      "level": "l1",
+      "type": "ancillary",
+      "version" : "1.0",
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://{{ DATASET_S3_ENDPOINT }}:80/{{ DATASET_BUCKET }}/products/volcano/{version}/{id}",
+        "urls": [
+          "http://{{ DATASET_BUCKET }}.{{ DATASET_S3_WEBSITE_ENDPOINT }}/products/volcano/{version}/{id}",
+          "s3://{{ DATASET_S3_ENDPOINT }}:80/{{ DATASET_BUCKET }}/products/volcano/{version}/{id}"
+        ]
+      },
+      "browse": {
+        "s3-profile-name": "default",
+        "location": "s3://{{ DATASET_S3_ENDPOINT }}:80/{{ DATASET_BUCKET }}/browse/volcano/{version}/{id}",
+        "urls": [
+          "http://{{ DATASET_BUCKET }}.{{ DATASET_S3_WEBSITE_ENDPOINT }}/browse/volcano/{version}/{id}",
+          "s3://{{ DATASET_S3_ENDPOINT }}:80/{{ DATASET_BUCKET }}/browse/volcano/{version}/{id}"
+        ]
+      }
+   }
