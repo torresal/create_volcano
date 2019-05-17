@@ -5,6 +5,7 @@
 from __future__ import print_function
 import os
 import re
+import math
 import json
 
 VERSION = "v1.0"
@@ -38,7 +39,7 @@ def gen_product(vname, lat, lon, gvp_id):
     if len(clean_gvp) > 50 or len(clean_gvp) < 1:
         raise Exception('Provided GVP number is invalid: {}'.format(clean_gvp))
     prod_id = PROD_ID.format(clean_gvp, clean_name, VERSION)
-    location = {"type": "Point", "coordinates": [lon, lat]}
+    location = build_polygon_geometry(lat, lon)
     ds_obj = {'label': prod_id, 'version': VERSION, "location": location}
     met_obj = {"geometry": location, "volcano_number": clean_gvp, "longitude": lon, "latitude": lat,
                "clean_name": clean_name, "volcano_name": vname}
@@ -54,6 +55,28 @@ def save_product_met(prod_id, ds_obj, met_obj):
     outpath = os.path.join(prod_id, '{}.met.json'.format(prod_id))
     with open(outpath, 'w') as outf:
         json.dump(met_obj, outf)
+
+def shift(lat, lon, bearing, distance):
+    R = 6378.1  # Radius of the Earth
+    bearing = math.pi * bearing / 180  # convert degrees to radians
+    lat1 = math.radians(lat)  # Current lat point converted to radians
+    lon1 = math.radians(lon)  # Current long point converted to radians
+    lat2 = math.asin(math.sin(lat1) * math.cos(distance / R) +
+                     math.cos(lat1) * math.sin(distance / R) * math.cos(bearing))
+    lon2 = lon1 + math.atan2(math.sin(bearing) * math.sin(distance / R) * math.cos(lat1),
+                             math.cos(distance / R) - math.sin(lat1) * math.sin(lat2))
+    lat2 = math.degrees(lat2)
+    lon2 = math.degrees(lon2)
+    return [lon2, lat2]
+
+def build_polygon_geojson(lat, lon):
+    radius = 1.0
+    l = range(0, 361, 20)
+    coordinates = []
+    for b in l:
+        coords = shift(lat, lon, b, radius)
+        coordinates.append(coords)
+    return {"coordinates": [coordinates], "type": "Polygon"}
 
 def load_context():
     '''loads the context file into a dict'''
