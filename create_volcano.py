@@ -10,6 +10,7 @@ import os
 import re
 import json
 import math
+import shutil
 import urllib3
 import requests
 
@@ -54,6 +55,7 @@ def attempt_browse(prod_id, met_obj):
     '''attempts to download the browse product'''
     url = met_obj.get("properties", {}).get("primary_photo_link", False)
     browse_path = os.path.join(prod_id, "{}.browse.png".format(prod_id))
+    browse_small_path = os.path.join(prod_id, "{}.browse_small.png".format(prod_id))
     jpg_path = os.path.join(prod_id, "{}.browse.jpeg".format(prod_id))
     print('localizing url {} to {}'.format(url, browse_path))
     try:
@@ -61,6 +63,7 @@ def attempt_browse(prod_id, met_obj):
             os.system("wget -O {} {}".format(jpg_path, url))
             os.system("convert {} {}".format(jpg_path, browse_path))
             os.remove(jpg_path)
+            shutil.copyfile(browse_path, browse_small_path)
         else:
             os.system("wget -O {} {}".format(browse_path, url))
     except:
