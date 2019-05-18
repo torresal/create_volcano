@@ -1,0 +1,30 @@
+{
+  "command":"/home/ops/verdi/ops/create_volcano/create_individual_volcano.py",
+  "imported_worker_files": {
+    "/home/ops/.netrc": "/home/ops/.netrc",
+    "/home/ops/.aws": "/home/ops/.aws"
+  },
+  "disk_usage":"2GB",
+  "recommended-queues": ["factotum-job_worker-large"],
+  "soft_time_limit": 2000,
+  "time_limit": 2800,
+  "params" : [
+    {
+      "name": "volcano_number",
+      "destination": "context"
+    },
+    {
+      "name": "GVP_number",
+      "destination": "context"
+    },
+    {
+      "name": "latitude",
+      "destination": "context"
+    },
+    {
+      "name": "longitude",
+      "destination": "context"
+    }
+
+  ]
+}

@@ -1,0 +1,27 @@
+{
+    "label": "Volcano - Publish Single Volcano Product",
+    "submission_type": "individual",
+    "enable_dedup": false,
+    "params" : [
+    {
+      "name": "volcano_number",
+      "from": "submitter",
+      "type": "text"
+    },
+    {
+      "name": "GVP_number",
+      "from": "submitter",
+      "type": "text"
+    },
+    {
+      "name": "latitude",
+      "from": "submitter",
+      "type": "text"
+    },
+    {
+      "name": "longitude",
+      "from": "submitter",
+      "type": "text"
+    }
+    ]
+}
