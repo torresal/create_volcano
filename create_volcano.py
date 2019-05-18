@@ -41,9 +41,9 @@ def gen_product(volc_obj):
     clean_name = re.sub('[^a-z^A-Z^0-9\^_]+', '', vname.replace(' ', '_').replace('-','_')).strip('_')
     prod_id = VOLC_PROD.format(vnumber, clean_name, VERSION)
     location = build_polygon_geojson(volc_obj.get('geometry')) #volc_obj["geometry"] # cannot use POint obj in grq
-    volc_obj['clean_name'] = clean_name
     ds_obj = {'label': prod_id, 'version': VERSION, "location": location}
-    met_obj = volc_obj
+    met_obj = volc_obj.get('properties')
+    met_obj['clean_name'] = clean_name
     print("generating: {}".format(prod_id))
     save_product_met(prod_id, ds_obj, met_obj)
     if not prop.get('primary_photo_link', False) == None:
