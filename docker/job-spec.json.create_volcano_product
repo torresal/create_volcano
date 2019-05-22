@@ -10,7 +10,7 @@
   "time_limit": 2800,
   "params" : [
     {
-      "name": "volcano_number",
+      "name": "volcano_name",
       "destination": "context"
     },
     {
