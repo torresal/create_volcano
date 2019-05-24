@@ -4,7 +4,7 @@
     "enable_dedup": false,
     "params" : [
     {
-      "name": "volcano_name",
+      "name": "volcano_name ",
       "from": "submitter",
       "type": "text"
     },
